@@ -1,0 +1,26 @@
+<RelativeLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+    
+     <include
+		android:id="@+id/common_actionbar"
+		layout="@layout/include_action_bar" />
+    
+    <RelativeLayout
+        android:id="@+id/rl_sleep_plan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/common_actionbar" >
+        
+    	<ListView
+		  	android:id="@+id/lv_sleep_plan_detail"
+		  	android:layout_width="match_parent"
+		  	android:layout_height="wrap_content"
+		  	android:background="@color/white_color">
+	
+		</ListView>
+        
+	</RelativeLayout>
+     
+</RelativeLayout>

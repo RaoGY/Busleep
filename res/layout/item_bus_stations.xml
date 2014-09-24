@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_selector">
+
+    <TextView
+        android:id="@+id/tv_bus_station"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textColor="@color/light_blue_color"
+        android:textSize="20sp" />
+    
+  	<View
+        android:layout_width="match_parent"
+        android:layout_below="@id/tv_bus_station"
+        android:layout_height="@dimen/base_line_width"
+        android:background="@drawable/base_horizontal_line" >
+    </View>
+    
+</RelativeLayout>

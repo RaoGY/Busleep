@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <item
+        android:id="@+id/menuItem_sleep_plan"
+        android:orderInCategory="100"
+        android:title="@string/add_alarm" android:checked="true" android:visible="true"/>
+
+</menu>

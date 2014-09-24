@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+		android:id="@+id/common_actionbar"
+		layout="@layout/include_action_bar" />
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/common_actionbar"
+		android:background="@color/light_gray"
+		android:layout_above="@+id/ll_busline_detail_bottom">
+        
+	    <TextView
+	        android:id="@+id/tv_busline_detail_drection"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:padding="5dp"
+	        android:singleLine="true"
+	        android:textColor="@color/white_color"
+	        android:textSize="15sp" />
+	
+	    <TextView
+	        android:id="@+id/tv_busline_detail_time"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/tv_busline_detail_drection"
+	        android:layout_marginBottom="5dp"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginRight="5dp"
+	        android:padding="5dp"
+	        android:singleLine="true"
+	        android:textColor="@color/white_color"
+	        android:textSize="14sp" />
+	    
+	
+	    
+		<ListView
+	        android:id="@+id/lv_busline_detail_stations"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/white_color"
+	        android:layout_below="@+id/tv_busline_detail_time" >
+	
+		</ListView>
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_busline_detail_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+		<RelativeLayout
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1" >
+		  
+			<Button
+			    android:id="@+id/btn_reverse_busline"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:background="@drawable/top_bar"
+			    android:drawableTop="@drawable/tab_reverse_busline_btn"
+			    android:paddingBottom="2dip"
+			    android:onClick="onTabSelect"
+			    android:paddingTop="7dip"
+			    android:scaleType="matrix"
+			    android:text="@string/tab_reverse_busline"
+			    android:textColor="@drawable/tab_textcolor"
+			    android:textSize="12sp" />
+		</RelativeLayout>
+
+		<RelativeLayout
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1" >
+		   
+			<Button
+			    android:id="@+id/btn_collect"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:background="@drawable/top_bar"
+			    android:drawableTop="@drawable/tab_collect_btn"
+			    android:onClick="onTabSelect"
+			    android:paddingBottom="2dip"
+			    android:paddingTop="7dip"
+			    android:scaleType="matrix"
+			    android:text="@string/tab_collect"
+			    android:textColor="@drawable/tab_textcolor"
+			    android:textSize="12sp" />    
+		 </RelativeLayout>
+      
+		<Button
+			android:id="@+id/btn_sleep_plan"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@drawable/top_bar"
+			android:drawableTop="@drawable/tab_sleep_plan_btn"
+			android:onClick="onTabSelect"
+			android:paddingBottom="2dip"
+			android:paddingTop="7dip"
+			android:scaleType="matrix"
+			android:text="@string/tab_sleep_plan"
+			android:textColor="@drawable/tab_textcolor"
+			android:textSize="12sp" />
+		
+	</LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navi_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_navi" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="top"
+        android:orientation="vertical" >
+
+		<TextView
+		    android:id="@+id/tv_navi_menu_user_center"
+		    style="@style/navitext"
+		    android:drawableLeft="@drawable/ic_navi_home"
+		    android:drawablePadding="8dp"
+		    android:text="@string/navi_menu_user_center"
+		    android:textColor="#FFFFFF" />
+
+		 <TextView
+            android:id="@+id/tv_navi_menu_sleep_plan"
+            style="@style/navitext"
+            android:drawableLeft="@drawable/ic_navi_feedback"
+            android:text="@string/navi_menu_sleep_plan" 
+            android:drawablePadding="8dp"
+            android:textColor="#FFFFFF"/>
+		
+        <TextView
+            android:id="@+id/tv_navi_menu_bus_near"
+            style="@style/navitext"
+            android:drawableLeft="@drawable/ic_navi_feedback"
+            android:text="@string/navi_menu_bus_near" 
+            android:drawablePadding="8dp"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/tv_navi_menu_bus_query"
+            style="@style/navitext"
+            android:drawableLeft="@drawable/ic_navi_about"
+            android:text="@string/navi_menu_bus_query"
+            android:drawablePadding="8dp"
+            android:textColor="#FFFFFF" />
+        
+     </LinearLayout>
+        
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="top"
+        android:orientation="vertical" >  
+         
+        <TextView
+            android:id="@+id/tv_navi_menu_share"
+            style="@style/navitext"
+           
+            android:drawableLeft="@drawable/ic_navi_about"
+            android:drawablePadding="8dp"
+            android:text="@string/navi_menu_share"
+            android:textColor="#FFFFFF" />
+      
+        <TextView
+            android:id="@+id/tv_navi_menu_more"
+            style="@style/navitext"
+          
+            android:drawableLeft="@drawable/ic_navi_about"
+            android:drawablePadding="8dp"
+            android:text="@string/navi_menu_more"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+</RelativeLayout>

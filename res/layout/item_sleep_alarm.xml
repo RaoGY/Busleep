@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_alarm"
+    android:background="@drawable/btn_selector" >
+
+    <RelativeLayout 
+         android:id="@+id/rl_bus_station"
+         android:layout_alignParentLeft="true"
+         android:layout_width="match_parent"
+		 android:layout_height="wrap_content"
+		 android:layout_centerVertical="true">
+        
+         <TextView
+         	android:id="@+id/tv_bus_station"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+        	android:textSize="20sp"
+        	android:textColor="@color/light_blue_color"
+         	android:padding="5dp"/>
+         
+         <TextView
+         	android:id="@+id/tv_current_distance"
+         	android:layout_below="@+id/tv_bus_station"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:textSize="13sp"
+         	android:padding="5dp"/>
+         
+         <TextView
+         	android:id="@+id/tv_alarm_state"
+         	android:layout_toRightOf="@+id/tv_current_distance"
+         	android:layout_below="@+id/tv_bus_station"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:textSize="13sp"
+         	android:padding="5dp"/>
+         
+    </RelativeLayout>
+     
+    <ImageView
+        android:id="@+id/iv_open_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/on"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/iv_close_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/off"
+        android:visibility="invisible" />
+    
+    <View
+        android:layout_width="match_parent"
+       	android:layout_height="@dimen/base_line_width"
+        android:background="@drawable/base_horizontal_line" >
+   	</View>
+    
+</RelativeLayout>
+         
+    <!-- 
+        <View
+        	android:layout_width="match_parent"
+       	 	android:layout_height="@dimen/base_line_width_2"
+        	android:background="@drawable/base_horizontal_line" >
+   		</View>
+     -->
+

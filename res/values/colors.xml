@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <color name="theme_color">#D95555</color>
+    <color name="black_color">#000000</color>
+    <color name="header_color">#4889DB</color>
+ 	<color name="white_color">#F0FFFF</color>
+ 	<color name="light_gray">#515151</color>
+ 	<color name="light_blue_color">#276CBA</color>
+ 	<color name="light_red_color">#A42D21</color>
+ 	<color name="dark_red_color">#DC143C</color>
+ 	<color name="light_blue">#00CC99</color>
+ 	<color name="transparent">#00000000</color>
+ 	<color name="color_bus_navi_text_normal">#9da0a4</color>
+    <color name="color_bus_navi_text_press">#4f9ef6</color>
+    <color name="base_bg">#f4f6f6</color>
+    <color name="color_theme">#489cfa</color>
+    
+    <color name="dialog_color_title">#f82c22</color>
+    <color name="base_color_text_black">#3e3e39</color>
+    <color name="base_color_text_gray">#9fa0a0</color>
+    <color name="base_color_text_white">#ffffff</color>
+    
+</resources>

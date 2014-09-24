@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+     <LinearLayout
+        android:id="@+id/bus_navi"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_bus_route"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="onTabSelect"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="@string/bus_route"
+                android:textColor="@drawable/tab_textcolor"
+                android:textSize="20sp" 
+                android:gravity="center_horizontal"/>
+            
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_bus_station"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_horizontal"
+                android:onClick="onTabSelect"
+                android:paddingBottom="2dip"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="@string/bus_station"
+                android:textColor="@drawable/tab_textcolor"
+                android:textSize="20sp" />
+            
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/tv_bus_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:onClick="onTabSelect"
+                android:paddingTop="7dip"
+                android:scaleType="matrix"
+                android:text="@string/bus_transfer"
+                android:textColor="@drawable/tab_textcolor"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+        
+    </LinearLayout>
+    
+    <RelativeLayout
+        android:id="@+id/bus_navi_center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bus_navi" >
+	</RelativeLayout>
+
+</RelativeLayout>
