@@ -24,7 +24,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
-		initView("主页");
+		initView("周边公交");
 		initFragment();
 	}
 	
@@ -41,11 +41,11 @@ public class MainActivity extends BaseSlidingFragmentActivity {
         mSlidingMenu = getSlidingMenu();
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
         mSlidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        //mSlidingMenu.setFadeDegree(0.35f);
+        
         mSlidingMenu.setMode(SlidingMenu.LEFT);
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         mSlidingMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
-        //mSlidingMenu.setShadowWidth(20);
+       
         mSlidingMenu.setBehindScrollScale(0);
     }
 	
@@ -66,7 +66,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 
 		@Override
 		public void onClick() {
-			// TODO Auto-generated method stub
+			
            toggle();
 		}
 	}
@@ -78,7 +78,7 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 	 */
 	@Override
 	public void onBackPressed() {
-		// TODO Auto-generated method stub
+		
 		if (firstTime + 2000 > System.currentTimeMillis()) {
 			super.onBackPressed();
 		} else {
@@ -91,8 +91,11 @@ public class MainActivity extends BaseSlidingFragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
-		DBHelper dbHelper=DBHelper.getInstance(this);
-		dbHelper.closeDb();
+        try {
+            DBHelper db = DBHelper.getInstance(this);
+            db.closeDb();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 }

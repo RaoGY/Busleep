@@ -1,10 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/navi_list"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_navi" >
+    android:background="#dadada"
+    android:orientation="vertical" >
 
+    <include layout="@layout/behind_title" />
+    
+    <ListView
+        android:id="@+id/behind_list_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/list_margin_height"
+        android:layout_marginTop="@dimen/title_height"
+        android:divider="@drawable/dis_behind_side"
+        android:listSelector="#0fff"
+        android:cacheColorHint="#0000" >
+    </ListView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ad_height"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/bottom_button_height"
+         >
+    </FrameLayout>
+    
+    <!-- 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -76,5 +100,7 @@
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
-
-</RelativeLayout>
+    
+     -->
+    
+</FrameLayout>

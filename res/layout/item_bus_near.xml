@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/btn_selector">
+    android:background="@drawable/item_sleep_plan_bg_selector">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
@@ -24,7 +24,7 @@
 	            android:layout_marginLeft="5dp"
 	            android:layout_marginRight="5dp"
 	            android:padding="5dp"
-	            android:textColor="@color/black_color"
+	            android:textColor="@color/black"
 	            android:textSize="18sp" />
 	
 	        <TextView
@@ -35,7 +35,7 @@
 	            android:layout_marginRight="5dp"
 	            android:padding="5dp"
 	            android:singleLine="true"
-	            android:textColor="@color/light_blue_color"
+	            android:textColor="@color/light_blue"
 	            android:textSize="13sp" />
 	
 	        <TextView
@@ -47,7 +47,7 @@
 	            android:layout_marginRight="5dp"
 	            android:padding="5dp"
 	            android:singleLine="true"
-	            android:textColor="@color/light_red_color"
+	            android:textColor="@color/light_red"
 	            android:textSize="13sp" />
    		</LinearLayout>
    		

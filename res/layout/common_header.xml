@@ -3,7 +3,7 @@
     style="@style/ActionBar"
     android:baselineAligned="false"
     android:focusable="true" 
- 	android:background="@color/header_color">
+ 	android:background="@color/common_action_bar_color">
  	
     <LinearLayout
         android:id="@+id/header_layout_leftview_container"

@@ -5,6 +5,8 @@ import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,7 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 	private View rootView;
 	private XListView  mBusNearListView;
 	private ProgressDialog progress=null ;
+	private MyHandler mHandler;    		//处理消息的Handle对象;
 	
 	/**
 	 * 定位帮助类;
@@ -73,6 +76,14 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 		
 		initXListView();
 		
+		initData();
+	}
+	
+	/**
+	 * 初始化数据;
+	 */
+	private void initData(){
+		
 		/**
 		 * 创建定位帮助类;
 		 */
@@ -86,10 +97,8 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 		nearbySearchHelper.init();
 		nearbySearchHelper.setNearBySearchListener(this);
 		
-		/**
-		 * 执行搜索;
-		 */
-		excuteSearch();
+		mHandler=new MyHandler();
+		mHandler.sendEmptyMessage(0);
 	}
 	
 	private void initXListView(){
@@ -156,7 +165,10 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 	@Override
 	public void onRefresh() {
 	
-		excuteSearch();
+		if(null==mHandler){
+			return;
+		}
+		mHandler.sendEmptyMessage(0);
 	}
 
 	@Override
@@ -214,4 +226,26 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 		
 		refreshPull();
 	}
+	
+
+	/**
+	 * 自定义的Handle对象;
+	 * @author Render;
+	 *
+	 */
+	private class MyHandler extends Handler{
+		
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			
+			switch(msg.what){
+				case 0:{
+					excuteSearch();
+					break;
+				}
+			}
+		}
+	}
+	
 }

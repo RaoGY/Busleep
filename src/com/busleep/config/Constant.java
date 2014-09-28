@@ -22,4 +22,9 @@ public final class Constant {
 	public static final String BROADCAST_VALUE_TYPE="broadcast_value_type";	//广播值类型;
 	public static final String BROADCAST_ACTION="com.busleep.app.BroadcastReceiver";
 	public static final String IDS="ids";			//传递正在响的闹铃;
+	
+	public static final String ROUTE="线路";
+	public static final String STATION="站点";
+	public static final String TRANSFER="换乘";
+	
 }

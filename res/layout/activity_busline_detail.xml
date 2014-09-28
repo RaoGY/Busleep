@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_below="@id/common_actionbar"
-		android:background="@color/light_gray"
+		android:background="@color/gray"
 		android:layout_above="@+id/ll_busline_detail_bottom">
         
 	    <TextView
@@ -23,7 +23,7 @@
 	        android:layout_marginRight="5dp"
 	        android:padding="5dp"
 	        android:singleLine="true"
-	        android:textColor="@color/white_color"
+	        android:textColor="@color/white"
 	        android:textSize="15sp" />
 	
 	    <TextView
@@ -36,7 +36,7 @@
 	        android:layout_marginRight="5dp"
 	        android:padding="5dp"
 	        android:singleLine="true"
-	        android:textColor="@color/white_color"
+	        android:textColor="@color/white"
 	        android:textSize="14sp" />
 	    
 	
@@ -45,7 +45,7 @@
 	        android:id="@+id/lv_busline_detail_stations"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:background="@color/white_color"
+	        android:background="@color/white"
 	        android:layout_below="@+id/tv_busline_detail_time" >
 	
 		</ListView>

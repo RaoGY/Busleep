@@ -17,7 +17,7 @@
 		  	android:id="@+id/lv_sleep_plan_detail"
 		  	android:layout_width="match_parent"
 		  	android:layout_height="wrap_content"
-		  	android:background="@color/white_color">
+		  	android:background="@color/white">
 	
 		</ListView>
         

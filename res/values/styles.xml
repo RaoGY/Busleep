@@ -26,7 +26,7 @@
     
     <style name="ActionBarTitle">
         <item name="android:textSize">@dimen/base_action_bar_title_size</item>
-        <item name="android:textColor">@color/white_color</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:gravity">left|center</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
@@ -52,19 +52,19 @@
     </style>
     
     <style name="Render.TextView._Orange">
-        <item name="android:textColor">@color/dialog_color_title</item>
+        <item name="android:textColor">@color/base_text_orange_color</item>
     </style>
 
     <style name="Render.TextView._White">
-        <item name="android:textColor">@color/base_color_text_white</item>
+        <item name="android:textColor">@color/base_text_white_color</item>
     </style>
 
     <style name="Render.TextView._Gray">
-        <item name="android:textColor">@color/base_color_text_gray</item>
+        <item name="android:textColor">@color/base_text_gray_color</item>
     </style>
 
     <style name="Render.TextView._Black">
-        <item name="android:textColor">@color/base_color_text_black</item>
+        <item name="android:textColor">@color/base_text_black_color</item>
     </style>
     
      <!-- dialog -->

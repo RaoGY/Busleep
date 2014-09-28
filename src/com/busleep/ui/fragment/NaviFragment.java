@@ -1,9 +1,15 @@
 package com.busleep.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.mr.busleep.R;
 import com.busleep.ui.MainActivity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,40 +17,38 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 导航栏;
  * @author Render
  */
-public class NaviFragment extends Fragment implements OnClickListener {
+public class NaviFragment extends Fragment {
 	
-	private static final int MAIN_FRAGMENT=0;
-	private static final int SLEEPPLAN_FRAGMENT=1;
-	private static final int BUSNEAR_FRAGMENT=2;
-	private static final int BUSQUERY_FRAGMENT=3;
-	private static final int SHARE_FRAGMENT=4;
-	private static final int MORE_FRAGMENT=5;
+	private static final int BUSNEAR_FRAGMENT=0;
+	private static final int BUSQUERY_FRAGMENT=1;
+	private static final int SLEEPPLAN_FRAGMENT=2;
+	private static final int SHARE_FRAGMENT=3;
+	private static final int MORE_FRAGMENT=4;
 	
-	//关联主Activity;
+	private final String LIST_TEXT = "text";
+	private final String LIST_IMAGEVIEW = "img";
+	
 	private MainActivity mActivity;
 	
-	private TextView   mainTextView; 
-	private TextView   sleepPlanTextView;
-	private TextView   busNearTextView;
-	private TextView   busQueryTextView;
-	private TextView   shareTextView;
-	private TextView   moreTextView;
+	private BusNearFragment    	mBusNearFragment;		//周边公交片段;
+	private BusQueryFragment	mBusQueryFragment;		//公交查询片段;
+	private SleepPlanFragment	mSleepPlanFragment;		//睡眠计划片段;
+	private ShareFragment    	mShareFragment;			//分享片段; 
+	private MoreFragment 		mMoreFragment;			//更多片段;
 	
-	MainFragment    	mMainFragment;			//个人中心片段;
-	SleepPlanFragment	mSleepPlanFragment;		//睡眠计划片段;
-	BusNearFragment    	mBusNearFragment;		//周边公交片段;
-	BusQueryFragment	mBusQueryFragment;		//公交查询片段;
-	ShareFragment    	mShareFragment;			//分享片段; 
-	MoreFragment 		mMoreFragment;			//更多片段;
+	private FragmentManager 	mFragmentManager;
 	
-	private FragmentManager fragmentManager;
+	private ListView			mListView;
+	private SimpleAdapter		mAdapter;	
 	
 	//解析Fragment布局的View;
 	private View rootView;
@@ -59,16 +63,17 @@ public class NaviFragment extends Fragment implements OnClickListener {
 		if(rootView==null){
 			rootView=inflater.inflate(R.layout.behind_slidingmenu, null);
 		}
-		fragmentManager=getFragmentManager();
+		mFragmentManager=getFragmentManager();
 		
-		init();
+		initListView();
+		
+		OnTabSelected(BUSNEAR_FRAGMENT);
 		
 		return rootView;
 	}
 	
 	@Override
 	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
 		
 		mActivity=(MainActivity)activity;
 		super.onAttach(activity);
@@ -77,31 +82,83 @@ public class NaviFragment extends Fragment implements OnClickListener {
 	/**
 	 * 初始化,设置点击事件;
 	 */
-	private void init(){
+	private void initListView(){
 		
-		mainTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_user_center);
-		sleepPlanTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_sleep_plan);
-		busNearTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_bus_near);
-		busQueryTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_bus_query);
-		shareTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_share);
-		moreTextView=(TextView)rootView.findViewById(R.id.tv_navi_menu_more);
+		mListView=(ListView) rootView.findViewById(R.id.behind_list_show);
 		
-		mainTextView.setSelected(false);
-		sleepPlanTextView.setSelected(false);
-		busNearTextView.setSelected(true);
-		busQueryTextView.setSelected(false);
-		shareTextView.setSelected(false);
-		moreTextView.setSelected(false);
+		mAdapter=new SimpleAdapter(getActivity(), getData(),
+                R.layout.behind_list_show, new String[]{LIST_TEXT,LIST_IMAGEVIEW},
+                new int[]{R.id.textview_behind_title,R.id.imageview_behind_icon})
+		{
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+             
+                View view = super.getView(position, convertView, parent);
+                
+                if (position == BUSNEAR_FRAGMENT) {
+                    view.setBackgroundResource(R.drawable.back_behind_list);
+                    mListView.setTag(view);
+                } else {
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                }
+                return view;
+            }
+		};
 		
-		mainTextView.setOnClickListener(this);
-		sleepPlanTextView.setOnClickListener(this);
-		busNearTextView.setOnClickListener(this);
-		busQueryTextView.setOnClickListener(this);
-		shareTextView.setOnClickListener(this);
-		moreTextView.setOnClickListener(this);
-		
-		OnTabSelected(BUSNEAR_FRAGMENT);
+		mListView.setAdapter(mAdapter);
+	    mListView.setOnItemClickListener(new OnItemClickListener() {
+	      @Override
+	      public void onItemClick(AdapterView<?> parent, View view,
+	                  int position, long id) {
+	    	  
+	    	  if (mListView.getTag() != null) {
+                  if (mListView.getTag() == view) {
+                      return;
+                  }
+                  ((View) mListView.getTag()).setBackgroundColor(Color.TRANSPARENT);
+              }
+	    	  
+	    	  mListView.setTag(view);
+              view.setBackgroundResource(R.drawable.back_behind_list);
+	    	  
+	    	  OnTabSelected(position);
+	      }
+	  });
 	}
+	
+	/**
+	 * 获取绑定的数据;
+	 * @return
+	 */
+    private List<Map<String, Object>> getData() {
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(LIST_TEXT, getResources().getString(R.string.navi_menu_bus_near));
+        map.put(LIST_IMAGEVIEW, R.drawable.ic_navi_home);
+        list.add(map);
+        
+        map = new HashMap<String, Object>();
+        map.put(LIST_TEXT, getResources().getString(R.string.navi_menu_bus_query));
+        map.put(LIST_IMAGEVIEW, R.drawable.ic_navi_home);
+        list.add(map);
+        
+        map = new HashMap<String, Object>();
+        map.put(LIST_TEXT, getResources().getString(R.string.navi_menu_sleep_plan));
+        map.put(LIST_IMAGEVIEW, R.drawable.ic_navi_home);
+        list.add(map);
+        
+        map = new HashMap<String, Object>();
+        map.put(LIST_TEXT, getResources().getString(R.string.navi_menu_share));
+        map.put(LIST_IMAGEVIEW, R.drawable.ic_navi_home);
+        list.add(map);
+        
+        map = new HashMap<String, Object>();
+        map.put(LIST_TEXT, getResources().getString(R.string.navi_menu_more));
+        map.put(LIST_IMAGEVIEW, R.drawable.ic_navi_home);
+        list.add(map);
+        
+        return list;
+    }
 	
 	/**
 	 * 选中导航对应的Tab选项;
@@ -109,24 +166,13 @@ public class NaviFragment extends Fragment implements OnClickListener {
 	 */
 	private void OnTabSelected(int index){
 		
-		FragmentTransaction transaction=fragmentManager.beginTransaction();
+		FragmentTransaction transaction=mFragmentManager.beginTransaction();
 		String strTitle=null;
 		
 		//先隐藏所有的Fragment;
 		hideFragments(transaction);
 		
 		switch (index) {
-			case MAIN_FRAGMENT:{
-	
-				if(null==mMainFragment){
-					mMainFragment=new MainFragment();
-					transaction.add(R.id.main_center, mMainFragment);
-				}else {
-					transaction.show(mMainFragment);
-				}
-				strTitle=mActivity.getString(R.string.navi_menu_user_center);
-				break;
-			}
 			case SLEEPPLAN_FRAGMENT:{
 				
 				if(null==mSleepPlanFragment){
@@ -134,6 +180,7 @@ public class NaviFragment extends Fragment implements OnClickListener {
 					transaction.add(R.id.main_center, mSleepPlanFragment);
 				}else {
 					transaction.show(mSleepPlanFragment);
+					mSleepPlanFragment.updateAlarms();
 				}
 				strTitle=mActivity.getString(R.string.navi_menu_sleep_plan);
 				break;
@@ -191,9 +238,6 @@ public class NaviFragment extends Fragment implements OnClickListener {
 	 * @param transaction
 	 */
 	private void hideFragments(FragmentTransaction transaction){
-		if(mMainFragment!=null){
-			transaction.hide(mMainFragment);
-		}
 		if(mSleepPlanFragment!=null){
 			transaction.hide(mSleepPlanFragment);
 		}
@@ -209,82 +253,5 @@ public class NaviFragment extends Fragment implements OnClickListener {
 		if(mMoreFragment!=null){
 			transaction.hide(mMoreFragment);
 		}
-	}
-	
-	/**
-	 * 点击导航栏切换 同时更改标题;
-	 */
-	@Override
-	public void onClick(View view) {
-		// TODO Auto-generated method stub
-		
-		switch (view.getId()) {
-		case R.id.tv_navi_menu_user_center:
-			mainTextView.setSelected(true);
-			sleepPlanTextView.setSelected(false);
-			busNearTextView.setSelected(false);
-			busQueryTextView.setSelected(false);
-			shareTextView.setSelected(false);
-			moreTextView.setSelected(false);
-			
-			OnTabSelected(MAIN_FRAGMENT);
-			break;
-			
-		case R.id.tv_navi_menu_sleep_plan:
-			mainTextView.setSelected(false);
-			sleepPlanTextView.setSelected(true);
-			busNearTextView.setSelected(false);
-			busQueryTextView.setSelected(false);
-			shareTextView.setSelected(false);
-			moreTextView.setSelected(false);
-			
-			OnTabSelected(SLEEPPLAN_FRAGMENT);
-			break;
-		
-		case R.id.tv_navi_menu_bus_near:
-			mainTextView.setSelected(false);
-			sleepPlanTextView.setSelected(false);
-			busNearTextView.setSelected(true);
-			busQueryTextView.setSelected(false);
-			shareTextView.setSelected(false);
-			moreTextView.setSelected(false);
-			
-			OnTabSelected(BUSNEAR_FRAGMENT);
-			break;
-			
-		case R.id.tv_navi_menu_bus_query:
-			mainTextView.setSelected(false);
-			sleepPlanTextView.setSelected(false);
-			busNearTextView.setSelected(false);
-			busQueryTextView.setSelected(true);
-			shareTextView.setSelected(false);
-			moreTextView.setSelected(false);
-			
-			OnTabSelected(BUSQUERY_FRAGMENT);
-			break;
-			
-		case R.id.tv_navi_menu_share:
-			mainTextView.setSelected(false);
-			sleepPlanTextView.setSelected(false);
-			busNearTextView.setSelected(false);
-			busQueryTextView.setSelected(false);
-			shareTextView.setSelected(true);
-			moreTextView.setSelected(false);
-			
-			OnTabSelected(SHARE_FRAGMENT);
-			break;
-			
-		case R.id.tv_navi_menu_more:
-			mainTextView.setSelected(false);
-			sleepPlanTextView.setSelected(false);
-			busNearTextView.setSelected(false);
-			busQueryTextView.setSelected(false);
-			shareTextView.setSelected(false);
-			moreTextView.setSelected(true);
-			
-			OnTabSelected(MORE_FRAGMENT);
-			break;
-		
-		}	
 	}
 }

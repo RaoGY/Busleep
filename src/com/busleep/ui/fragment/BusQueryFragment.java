@@ -1,50 +1,60 @@
 package com.busleep.ui.fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mr.busleep.R;
+import com.busleep.adapter.BasePageAdapter;
+import com.busleep.config.Constant;
 import com.busleep.ui.base.BaseFragment;
 
 /**
  * 公交查询片段;
  * @author Render;
  */
-public class BusQueryFragment extends BaseFragment implements OnClickListener{
+public class BusQueryFragment extends BaseFragment{
 
-	private static final int ROUTE_FRAGMENT=0;
-	private static final int STATION_FRAGMENT=1;
-	private static final int TRANSFER_FRAGMENT=2;
+	private View rootView;	
+	private TextView mTvRoute;
+	private TextView mTvStation;
+	private TextView mTvTransfer;
 	
-	private View rootView;
+	private ViewPager mPager;
+	private ImageView mIvCursor;
+	private BasePageAdapter mAdapter;
 	
-	private FragmentManager fragmentManager;
+	private int mOffset=0;			//动画偏移量;
+	private int mCurrentItem=0;		//当前的编号;
+	private int mBmpWidth;			//图片宽度;
 	
-	private TextView routeTextView;
-	private TextView stationTextView;
-	private TextView transferTextView;
-	
-	private RouteFragment mRouteFragment;
-	private StationFragment mStationFragment;
-	private TransferFragment mTransferFragment;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		
 		if(rootView==null){
 			rootView=inflater.inflate(R.layout.fragment_bus_query, null);
 		}
-		fragmentManager=getChildFragmentManager();
 		
-		init();
+		initTextView();
+		initViewPager();
+		initImageView();
 		
 		return rootView;
 	}
@@ -58,106 +68,127 @@ public class BusQueryFragment extends BaseFragment implements OnClickListener{
 	/**
 	 * 初始化点击事件;
 	 */
-	private void init(){
+	private void initTextView(){
 		
-		routeTextView=(TextView)rootView.findViewById(R.id.tv_bus_route);
-		stationTextView=(TextView)rootView.findViewById(R.id.tv_bus_station);
-		transferTextView=(TextView)rootView.findViewById(R.id.tv_bus_transfer);
+		mTvRoute=(TextView)rootView.findViewById(R.id.tv_bus_route);
+		mTvStation=(TextView)rootView.findViewById(R.id.tv_bus_station);
+		mTvTransfer=(TextView)rootView.findViewById(R.id.tv_bus_transfer);
+		mIvCursor=(ImageView)rootView.findViewById(R.id.iv_cursor);
 		
-		routeTextView.setSelected(true);
-		stationTextView.setSelected(false);
-		transferTextView.setSelected(false);
+		mTvRoute.setOnClickListener(new MyOnClickListener(0));
+		mTvStation.setOnClickListener(new MyOnClickListener(1));
+		mTvTransfer.setOnClickListener(new MyOnClickListener(2));
 		
-		routeTextView.setOnClickListener(this);
-		stationTextView.setOnClickListener(this);
-		transferTextView.setOnClickListener(this);
+		 mTvRoute.setSelected(true);
+		 mTvStation.setSelected(false);
+		 mTvTransfer.setSelected(false);
+		
 	}
 	
-	private void OnTabSelected(int index){
+	private void initViewPager(){
+		mPager=(ViewPager) rootView.findViewById(R.id.vPager);
 		
-		FragmentTransaction transaction=fragmentManager.beginTransaction();
+		mAdapter=new BasePageAdapter(getActivity());
+		List<String> strNames=new ArrayList<String>();
+		strNames.add(Constant.ROUTE);
+		strNames.add(Constant.STATION);
+		strNames.add(Constant.TRANSFER);
+		mAdapter.addFragment(strNames);
 		
-		hideFragments(transaction);
-		
-		switch (index) {
-			case ROUTE_FRAGMENT:{
-				if(mRouteFragment==null){
-					mRouteFragment=new RouteFragment();
-					transaction.add(R.id.bus_navi_center, mRouteFragment);
-					transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				}else{
-					transaction.show(mRouteFragment);
-				}
-				break;
-			}
-			case STATION_FRAGMENT:{
-				if(mStationFragment==null){
-					mStationFragment=new StationFragment();
-					transaction.add(R.id.bus_navi_center, mStationFragment);
-					transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				}else{
-					transaction.show(mStationFragment);
-				}
-				break;
-			}
-			case TRANSFER_FRAGMENT:{
-				if(mTransferFragment==null){
-					mTransferFragment=new TransferFragment();
-					transaction.add(R.id.bus_navi_center,mTransferFragment);
-					transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-				}else {
-					transaction.show(mTransferFragment);
-				}
-				break;
-			}
-		}
-		transaction.commit();
+		mPager.setAdapter(mAdapter);
+		mPager.setCurrentItem(0);
+		mPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
 	
-	/**
-	 * 将所有Fragment都置为隐藏;
-	 * @param transaction
-	 */
-	private void hideFragments(FragmentTransaction transaction){
-		if(mRouteFragment!=null){
-			transaction.hide(mRouteFragment);
+	
+	private void initImageView(){
+		mIvCursor = (ImageView) rootView.findViewById(R.id.iv_cursor);
+		mBmpWidth = BitmapFactory.decodeResource(getResources(), R.drawable.cursor).getWidth();// 获取图片宽度
+		DisplayMetrics dm = new DisplayMetrics();
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int screenW = dm.widthPixels;// 获取分辨率宽度;
+		mOffset = (screenW / 3 - mBmpWidth) / 2;// 计算偏移量;
+		Matrix matrix = new Matrix();
+		matrix.postTranslate(mOffset, 0);
+		mIvCursor.setImageMatrix(matrix);// 设置动画初始位置
+		
+	}
+	
+	
+	public class MyOnClickListener implements OnClickListener{
+
+		private int index=0;
+		
+		public MyOnClickListener(int i){
+			index=i;
 		}
-		if(mStationFragment!=null){
-			transaction.hide(mStationFragment);
-		}
-		if(mTransferFragment!=null){
-			transaction.hide(mTransferFragment);
+		
+		@Override
+		public void onClick(View v) {
+			mPager.setCurrentItem(index);
+			
 		}
 	}
 	
-	@Override
-	public void onClick(View view) {
-		// TODO Auto-generated method stub
+	public class MyOnPageChangeListener implements OnPageChangeListener{
 		
-		switch (view.getId()) {
-		case R.id.tv_bus_route:
-			routeTextView.setSelected(true);
-			stationTextView.setSelected(false);
-			transferTextView.setSelected(false);
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
 			
-			OnTabSelected(ROUTE_FRAGMENT);
-			
-			break;
-		case R.id.tv_bus_station:
-			routeTextView.setSelected(true);
-			stationTextView.setSelected(false);
-			transferTextView.setSelected(false);
-			
-			OnTabSelected(STATION_FRAGMENT);
-			break;
+
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
 		
-		case R.id.tv_bus_transfer:
-			routeTextView.setSelected(true);
-			stationTextView.setSelected(false);
-			transferTextView.setSelected(false);
 			
-			OnTabSelected(TRANSFER_FRAGMENT);
-			break;
-		}	
+		}
+
+		@Override
+		public void onPageSelected(int arg0) {
+			
+			int one=mOffset*2+mBmpWidth; // 页卡1 -> 页卡2 偏移量
+			int two=one*2;				 // 页卡1 -> 页卡3 偏移量
+			
+			 Animation animation = null;
+			 
+			 switch (arg0) {
+			 case 0:
+				 if (mCurrentItem == 1) {
+					 animation = new TranslateAnimation(one, 0, 0, 0);
+				 } else if (mCurrentItem == 2) {
+					 animation = new TranslateAnimation(two, 0, 0, 0);
+				 }
+				 mTvRoute.setSelected(true);
+				 mTvStation.setSelected(false);
+				 mTvTransfer.setSelected(false);
+				 break;
+			 case 1:
+				 if (mCurrentItem == 0) {
+					 animation = new TranslateAnimation(mOffset, one, 0, 0);
+				 } else if (mCurrentItem == 2) {
+					 animation = new TranslateAnimation(two, one, 0, 0);
+				 }
+				 mTvRoute.setSelected(false);
+				 mTvStation.setSelected(true);
+				 mTvTransfer.setSelected(false);
+				 break;
+			 case 2:
+				 if (mCurrentItem == 0) {
+					 animation = new TranslateAnimation(mOffset, two, 0, 0);
+				 } else if (mCurrentItem == 1) {
+					 animation = new TranslateAnimation(one, two, 0, 0);
+				 }
+				 mTvRoute.setSelected(false);
+				 mTvStation.setSelected(false);
+				 mTvTransfer.setSelected(true);
+				 break;
+			 }
+			 mCurrentItem = arg0;
+			 animation.setFillAfter(true);// True:图片停在动画结束位置
+			 animation.setDuration(300);
+			 mIvCursor.startAnimation(animation);
+			
+		}
 	}
 }

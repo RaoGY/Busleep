@@ -51,7 +51,7 @@ public class SleepPlanFragment extends BaseFragment implements OnItemClickListen
 	 * 标志handle中的消息类型;
 	 */
 	private final static int MSG_UPDATE_ALARMS=101;	//刷新闹铃列表;
-	
+	private final static int MSG_READ_ALARMS=100;	//读取闹铃列表;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,9 +78,8 @@ public class SleepPlanFragment extends BaseFragment implements OnItemClickListen
 		mAlarmAdapter.setOnAlarmStateChangeLister(this);
 		
 		mHandler=new MyHandler();
+		mHandler.sendEmptyMessage(MSG_READ_ALARMS);
 		
-		initAlarms();
-		startAlarmService();
 		registerBroadcastReceiver();
 	}
 	
@@ -118,8 +117,11 @@ public class SleepPlanFragment extends BaseFragment implements OnItemClickListen
 	/**
 	 * 更新界面上的闹钟列表;
 	 */
-	private void updateAlarms(){
-		mAlarmAdapter.updateListView(mAlarms);
+	public void updateAlarms(){
+		
+		if(mAlarms!=null){
+			mAlarmAdapter.updateListView(mAlarms);
+		}
 	}
 	
 	/**
@@ -205,8 +207,7 @@ public class SleepPlanFragment extends BaseFragment implements OnItemClickListen
 			}
 		}
 		
-		updateAlarms();
-		startAlarmService();
+		mHandler.sendEmptyMessage(MSG_UPDATE_ALARMS);
 	}
 	
 	/**
@@ -269,11 +270,14 @@ public class SleepPlanFragment extends BaseFragment implements OnItemClickListen
 			super.handleMessage(msg);
 			
 			switch(msg.what){
-				case MSG_UPDATE_ALARMS:{
+				case MSG_UPDATE_ALARMS:
 					updateAlarms();
 					startAlarmService();
 					break;
-				}
+				case MSG_READ_ALARMS:
+					initAlarms();
+					startAlarmService();
+					break;
 			}
 		}
 	}

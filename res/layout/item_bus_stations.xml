@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/btn_selector">
+    android:background="@drawable/item_sleep_plan_bg_selector">
 
     <TextView
         android:id="@+id/tv_bus_station"
@@ -12,7 +12,7 @@
         android:layout_marginRight="5dp"
         android:padding="8dp"
         android:singleLine="true"
-        android:textColor="@color/light_blue_color"
+        android:textColor="@color/light_blue"
         android:textSize="20sp" />
     
   	<View

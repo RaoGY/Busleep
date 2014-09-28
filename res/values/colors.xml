@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <color name="theme_color">#D95555</color>
-    <color name="black_color">#000000</color>
-    <color name="header_color">#4889DB</color>
- 	<color name="white_color">#F0FFFF</color>
- 	<color name="light_gray">#515151</color>
- 	<color name="light_blue_color">#276CBA</color>
- 	<color name="light_red_color">#A42D21</color>
- 	<color name="dark_red_color">#DC143C</color>
- 	<color name="light_blue">#00CC99</color>
- 	<color name="transparent">#00000000</color>
- 	<color name="color_bus_navi_text_normal">#9da0a4</color>
-    <color name="color_bus_navi_text_press">#4f9ef6</color>
-    <color name="base_bg">#f4f6f6</color>
-    <color name="color_theme">#489cfa</color>
+    <color name="common_action_bar_color">#4889DB</color>
     
-    <color name="dialog_color_title">#f82c22</color>
-    <color name="base_color_text_black">#3e3e39</color>
-    <color name="base_color_text_gray">#9fa0a0</color>
-    <color name="base_color_text_white">#ffffff</color>
+    <color name="black">#000000</color>
+ 	<color name="white">#FFFFFF</color>
+ 	<color name="gray">#515151</color>
+ 	<color name="light_blue">#276CBA</color>
+ 	<color name="light_red">#A42D21</color>
+ 	<color name="dark_red">#DC143C</color>
+ 	<color name="transparent">#00000000</color>
+ 	
+	<color name="behind_title_bg_color">#2000</color>
+ 	
+    <color name="xlistview_bg_color">#f4f6f6</color>
+    <color name="item_sleep_plan_color">#489cfa</color>
+    <color name="bus_navi_text_normal_color">#9da0a4</color>
+    <color name="bus_navi_text_press_color">#4f9ef6</color>
+    
+    <color name="base_text_black_color">#3e3e39</color>
+    <color name="base_text_gray_color">#9fa0a0</color>
+    <color name="base_text_white_color">#ffffff</color>
+    <color name="base_text_orange_color">#f82c22</color>
     
 </resources>

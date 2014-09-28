@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/rl_alarm"
-    android:background="@drawable/btn_selector" >
+    android:background="@drawable/item_sleep_plan_bg_selector" >
 
     <RelativeLayout 
          android:id="@+id/rl_bus_station"
@@ -17,7 +17,7 @@
          	android:layout_width="wrap_content"
          	android:layout_height="wrap_content"
         	android:textSize="20sp"
-        	android:textColor="@color/light_blue_color"
+        	android:textColor="@color/light_blue"
          	android:padding="5dp"/>
          
          <TextView

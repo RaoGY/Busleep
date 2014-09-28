@@ -25,7 +25,6 @@ public class SleepPlanService extends Service implements OnLocationListener{
 	private LocationHelper mLocationHelper=null;
 	private List<MrAlarm> mAlarms=null;
 	private MediaPlayer mediaPlayer=null;
-	private int   mSendLocationVlaue=0;			//发送定位的值; 
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -72,17 +71,12 @@ public class SleepPlanService extends Service implements OnLocationListener{
 		
 		CustomApplication.mLocation=location;
 		
-		if(mSendLocationVlaue>=2){
-			Intent intent=new Intent();
-			intent.setAction(Constant.BROADCAST_ACTION);
-			intent.putExtra(Constant.BROADCAST_VALUE_TYPE, Constant.LOCATION_COMPLETED);
+		Intent intent=new Intent();
+		intent.setAction(Constant.BROADCAST_ACTION);
+		intent.putExtra(Constant.BROADCAST_VALUE_TYPE, Constant.LOCATION_COMPLETED);
 			
-			sendBroadcast(intent);
-			mSendLocationVlaue=0;
-		}else {
-			mSendLocationVlaue++;
-		}
-		
+		sendBroadcast(intent);
+			
 		JudgeAlarm();
 	}
 	
