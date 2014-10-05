@@ -221,7 +221,8 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 			mBusNearListView.setAdapter(busNearAdapter);
 		}
 		else {
-			busNearAdapter.updateListView(list);
+			busNearAdapter.clear();
+			busNearAdapter.appendToList(list);
 		}
 		
 		refreshPull();
@@ -247,5 +248,4 @@ public class BusNearFragment extends BaseFragment implements OnNearbySearchListe
 			}
 		}
 	}
-	
 }

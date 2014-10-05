@@ -61,7 +61,6 @@ public class BusQueryFragment extends BaseFragment{
 	
 	@Override
 	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
 		super.onAttach(activity);
 	}
 

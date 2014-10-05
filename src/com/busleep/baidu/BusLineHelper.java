@@ -27,7 +27,6 @@ public class BusLineHelper implements OnGetPoiSearchResultListener,OnGetBusLineS
 	private BusLineSearch mBusLineSearch = null;	//公交路线搜索模块;
 	private MrBusLine mBusLine=null;				//搜索到的公交线路;
 	private String mUid=null;						//正向的Uid;
-	
 	private OnBusLineSearchListener mrBusLineSearchListener;	//自定义的搜索监听器;
 	
 	
@@ -82,7 +81,6 @@ public class BusLineHelper implements OnGetPoiSearchResultListener,OnGetBusLineS
 			LogUtils.i(TAG, "没找到该公交路线");
 			return;
 		}
-		
 		
 		mBusLine.setBusLineResult(result);
 		

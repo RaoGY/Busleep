@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.busleep.adapter.base.AdapterBase;
 import com.busleep.app.CustomApplication;
 import com.busleep.bean.MrAlarm;
 import com.mr.busleep.R;
@@ -15,25 +16,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AlarmAdapter extends BaseAdapter{
+public class AlarmAdapter extends AdapterBase<MrAlarm>{
 
 	private Context ct;
-	private List<MrAlarm> mAlarms=null;
 	private ViewHolder viewHolder=null;
 	private OnAlarmStateChangeListener mLister;
 	
 	public AlarmAdapter(List<MrAlarm> datas,Context ct){
-		
 		this.ct=ct;
-		mAlarms=datas;
+	    appendToList(datas);
 	}
 	
 	public void updateListView(List<MrAlarm> datas){
-		this.mAlarms=datas;
+
+		clear();
+		appendToList(datas);
 		notifyDataSetChanged();
 	}
 	
@@ -41,55 +41,6 @@ public class AlarmAdapter extends BaseAdapter{
 		this.mLister = lister;
 	}
 
-	@Override
-	public int getCount() {
-		if(mAlarms==null){
-			return 0;
-		}
-		return mAlarms.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		if(mAlarms==null){
-			return null;
-		}
-		return mAlarms.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		
-		return 0;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		
-		if (convertView == null) {
-			
-			convertView = LayoutInflater.from(ct).inflate(R.layout.item_sleep_alarm, null);
-			viewHolder = new ViewHolder();
-		
-			viewHolder.tvStationName = (TextView) convertView.findViewById(R.id.tv_bus_station);
-			viewHolder.tvCurrentDistance=(TextView)convertView.findViewById(R.id.tv_current_distance);
-			viewHolder.tvAlarmState=(TextView)convertView.findViewById(R.id.tv_alarm_state);
-			viewHolder.ivOpenAlarm=(ImageView)convertView.findViewById(R.id.iv_open_alarm);
-			viewHolder.ivCloseAlarm=(ImageView)convertView.findViewById(R.id.iv_close_alarm);
-			convertView.setTag(viewHolder);
-			
-		} else{
-			viewHolder = (ViewHolder) convertView.getTag();
-		}
-        
-		viewHolder.ivOpenAlarm.setOnClickListener(new ImageViewListener(position));
-		viewHolder.ivCloseAlarm.setOnClickListener(new ImageViewListener(position));
-		
-		initViewData(position, viewHolder,convertView);
-
-		return convertView;
-	}
-	
 	private class ImageViewListener implements OnClickListener{
 
 		private int position;
@@ -107,12 +58,12 @@ public class AlarmAdapter extends BaseAdapter{
 			int vid=v.getId();
 			if(vid==viewHolder.ivOpenAlarm.getId()){
 				
-				MrAlarm alarm=mAlarms.get(position);
+				MrAlarm alarm=getList().get(position);
 				mLister.onAlarmStateChange(false, alarm);
 				
 			}else if(vid==viewHolder.ivCloseAlarm.getId()) {
 				
-				MrAlarm alarm=mAlarms.get(position);
+				MrAlarm alarm=getList().get(position);
 				mLister.onAlarmStateChange(true, alarm);
 				
 			}
@@ -130,7 +81,7 @@ public class AlarmAdapter extends BaseAdapter{
 	
 	private void initViewData(int position,ViewHolder viewHolder, View convertView){
 		
-		MrAlarm alarm=mAlarms.get(position);
+		MrAlarm alarm=getList().get(position);
 		
 		if(alarm.isRing()){
 			convertView.setBackgroundColor(Color.parseColor("#9F291E"));
@@ -173,5 +124,38 @@ public class AlarmAdapter extends BaseAdapter{
 	public interface OnAlarmStateChangeListener{
 		
 		public void onAlarmStateChange(boolean b,MrAlarm alarm);
+	}
+
+	@Override
+	protected View getExView(int position, View convertView, ViewGroup parent) {
+		
+		if (convertView == null) {
+			
+			convertView = LayoutInflater.from(ct).inflate(R.layout.item_sleep_alarm, null);
+			viewHolder = new ViewHolder();
+		
+			viewHolder.tvStationName = (TextView) convertView.findViewById(R.id.tv_bus_station);
+			viewHolder.tvCurrentDistance=(TextView)convertView.findViewById(R.id.tv_current_distance);
+			viewHolder.tvAlarmState=(TextView)convertView.findViewById(R.id.tv_alarm_state);
+			viewHolder.ivOpenAlarm=(ImageView)convertView.findViewById(R.id.iv_open_alarm);
+			viewHolder.ivCloseAlarm=(ImageView)convertView.findViewById(R.id.iv_close_alarm);
+			convertView.setTag(viewHolder);
+			
+		} else{
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
+        
+		viewHolder.ivOpenAlarm.setOnClickListener(new ImageViewListener(position));
+		viewHolder.ivCloseAlarm.setOnClickListener(new ImageViewListener(position));
+		
+		initViewData(position, viewHolder,convertView);
+
+		return convertView;
+	}
+
+	@Override
+	protected void onReachBottom() {
+		
+		
 	}
 }

@@ -7,7 +7,7 @@ package com.busleep.utils;
 
 public class LogUtils {
  
-		public static boolean isDebug = false;
+		public static boolean isDebug = true;
 
 		public static void v(String tag, String msg) {
 			if (isDebug)
